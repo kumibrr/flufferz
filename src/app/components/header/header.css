@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+  margin-left: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.languagueSelectionContainer {
+
+}
