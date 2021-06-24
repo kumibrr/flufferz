@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./header.css";
 
@@ -5,15 +6,23 @@ import "./header.css";
 function Header() {
   
   const { t, i18n } = useTranslation();
+  const [languageList] = useState(Object.keys(i18n.services.resourceStore.data));
+
+  const languageSelected = (language) => {
+    i18n.changeLanguage(language);
+  }
 
   return (
     <div className="header">
       <h1>flufferz</h1>
-      <div className="languagueSelectionContainer">
-        <label htmlFor="language">{t('language.select')}: </label>
-        <select name="language" id="language">
-          <option value="en_EN">English</option>
-          <option value="es_ES">Español</option>
+      <div>
+        <label htmlFor="language">{t('languageSelect.label')}: </label>
+        <select name="language" id="language" value={i18n.language} onChange={(event) => languageSelected(event.target.value)}>
+          {
+            languageList.map((lng, index) => {
+              return lng.length <= 2 ? <option key={index} value={lng}>{t(lng)}</option> : '';
+            })
+          }
         </select>
       </div>
     </div>

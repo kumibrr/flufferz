@@ -1,3 +1,6 @@
 {
-  "language.select": "Seleccione su idioma"
+  "languageSelect.label": "Seleccione su idioma",
+  "en": "Inglés",
+  "es": "Español",
+  "breedSelect.title": "Seleccione una raza de perro"
 }
