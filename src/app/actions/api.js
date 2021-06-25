@@ -9,18 +9,21 @@ export const retrieveBreedList = () => {
     // I've added a setTimeout so the loading animation can be noticed.
     setTimeout(() => {
       fetch('https://dog.ceo/api/breeds/list/all', {method: 'GET'})
-        .then(response => response.json()).catch(e => dispatch(updateBreedListFailed(e)))
-        .then(data => {
-          if (data.status !== 'success') {
-            return dispatch(updateBreedListFailed({code: '500'}));
+        .then(response => {
+          if (!response.ok) {
+            return dispatch(updateBreedListFailed({code: response.status, message: response.statusText}));
           }
-          let parsedResponse = Object.entries(data.message)?.map?.((breedArr) => {
-            let [breed, subBreeds] = breedArr;
-            return {breed, subBreeds};
-          })
-          return dispatch(updateBreedListSuccess(parsedResponse))
+          return response.json()
         })
-        .catch(e => dispatch(updateBreedListFailed(e)));
+        .then(data => {
+          if (data?.message) {
+            let parsedResponse = Object.entries(data.message)?.map?.((breedArr) => {
+              let [breed, subBreeds] = breedArr;
+              return {breed, subBreeds};
+            })
+            return dispatch(updateBreedListSuccess(parsedResponse))
+          }
+        });
     }, 1000);
   }
 }
@@ -31,12 +34,16 @@ export const retrieveDogPhotos = (payload) => {
     // I've added a setTimeout so the loading animation can be noticed.
       setTimeout(() => {
         fetch(`https://dog.ceo/api/breed/${payload.baseBreed}/images`, {method: 'GET'})
-        .then(response => response.json()).catch(e => dispatch(updateDogPhotosFailed(e)))
-        .then(data => {
-          if (data.status !== 'success') {
-            return dispatch(updateDogPhotosFailed({code: '500'}));
+        .then(response => {
+          if (!response.ok) {
+            return dispatch(updateDogPhotosFailed({code: response.status, message: response.statusText}));
           }
-          return dispatch(updateDogPhotosSuccess(data.message.filter(uri => uri.includes(payload.subBreed))));
+          return response.json()
+        }).catch(e => dispatch(updateDogPhotosFailed(e)))
+        .then(data => {
+          if (data?.message) {
+            return dispatch(updateDogPhotosSuccess(data.message.filter(uri => uri.includes(payload.subBreed))));
+          }
         })
         .catch(e => dispatch(updateDogPhotosFailed(e))); 
       }, 1000);

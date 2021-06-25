@@ -2,13 +2,14 @@ import { UPDATE_BREED_LIST_FAILED, UPDATE_BREED_LIST_STARTED, UPDATE_BREED_LIST_
 
 const initialState = {
   breedList: undefined,
-  loading: false
+  loading: false,
+  error: undefined
 }
 
 const breedListReducer = (state = initialState, action) => {
   switch(action.type) {
     case UPDATE_BREED_LIST_STARTED:
-      return { ...state, loading: true }
+      return { ...state, loading: true, error: undefined }
     case UPDATE_BREED_LIST_SUCCESS:
       return { ...state, loading: false, ...action.payload, };
     case UPDATE_BREED_LIST_FAILED:

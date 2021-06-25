@@ -5,6 +5,7 @@ import Pictures from './components/pictures/pictures';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { retrieveDogPhotos } from './actions/api';
+import ErrorComponent from './components/ErrorComponent/ErrorComponent';
 
 function App({t, breedList, retrieveDogPhotos, loadingList, loadingPhotos}) {
 
@@ -25,6 +26,7 @@ function App({t, breedList, retrieveDogPhotos, loadingList, loadingPhotos}) {
 
   return (
     <div>
+      <ErrorComponent></ErrorComponent>
       <Header></Header>
       <div className="content">
         <h1>{t('breedSelect.title')}:</h1>
