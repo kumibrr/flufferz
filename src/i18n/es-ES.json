@@ -2,5 +2,6 @@
   "languageSelect.label": "Seleccione su idioma",
   "en": "Inglés",
   "es": "Español",
-  "breedSelect.title": "Seleccione una raza de perro"
+  "breedSelect.title": "Seleccione una raza de perro",
+  "updateBreedList.button": "Actualizar razas disponibles"
 }
