@@ -39,7 +39,7 @@ function App({t, breedList, retrieveDogPhotos, loadingList, loadingPhotos}) {
             {
               breedList?.map?.((breed, i) => {
                 return (
-                  <Fragment>
+                  <Fragment key={`f${i}`}>
                     <option key={i} value={`${breed.breed}#${breed.breed}`}>{breed.breed}</option>
                     {
                       breed.subBreeds?.map?.((value, j) => {
