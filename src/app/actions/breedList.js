@@ -1,6 +1,4 @@
-import { CLEAR_BREED_LIST, UPDATE_BREED_LIST_FAILED, UPDATE_BREED_LIST_STARTED, UPDATE_BREED_LIST_SUCCESS } from "../constants/actions";
-
-export const clearBreedList = () => ({ type: CLEAR_BREED_LIST });
+import { UPDATE_BREED_LIST_FAILED, UPDATE_BREED_LIST_STARTED, UPDATE_BREED_LIST_SUCCESS } from "../constants/actions";
 
 export const updateBreedListStarted = () => ({ type: UPDATE_BREED_LIST_STARTED});
 

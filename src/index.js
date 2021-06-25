@@ -6,6 +6,9 @@ import { store } from './app/store/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import './i18n/i18n';
+import { retrieveBreedList } from './app/actions/api';
+
+store.dispatch(retrieveBreedList());
 
 ReactDOM.render(
   <React.StrictMode>
