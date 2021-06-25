@@ -25,10 +25,12 @@ export const retrieveBreedList = () => {
   }
 }
 
-export const retrieveDogPhotos = ({payload}) => {
+export const retrieveDogPhotos = (payload) => {
   return dispatch => {
     dispatch(updateDogPhotosStarted());
-      fetch(`https://dog.ceo/api/breed/${payload.baseBreed}/images`, {method: 'GET'})
+    // I've added a setTimeout so the loading animation can be noticed.
+      setTimeout(() => {
+        fetch(`https://dog.ceo/api/breed/${payload.baseBreed}/images`, {method: 'GET'})
         .then(response => response.json()).catch(e => dispatch(updateDogPhotosFailed(e)))
         .then(data => {
           if (data.status !== 'success') {
@@ -36,6 +38,7 @@ export const retrieveDogPhotos = ({payload}) => {
           }
           return dispatch(updateDogPhotosSuccess(data.message.filter(uri => uri.includes(payload.subBreed))));
         })
-        .catch(e => dispatch(updateDogPhotosFailed(e)));
+        .catch(e => dispatch(updateDogPhotosFailed(e))); 
+      }, 1000);
   }
 }

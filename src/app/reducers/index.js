@@ -12,9 +12,9 @@ const breedListReducer = (state = initialState, action) => {
     case UPDATE_BREED_LIST_STARTED:
       return { ...state, loading: true }
     case UPDATE_BREED_LIST_SUCCESS:
-      return { ...state, ...action.payload, loading: false };
+      return { ...state, loading: false, ...action.payload, };
     case UPDATE_BREED_LIST_FAILED:
-      return { ...state, ...action.payload, loading: false };
+      return { ...state, loading: false, ...action.payload };
     default:
       return state;
   }
@@ -25,9 +25,9 @@ const dogPhotosReducer = (state = initialState, action) => {
     case UPDATE_DOG_PHOTOS_STARTED:
       return { ...state, loading: true }
     case UPDATE_DOG_PHOTOS_SUCCESS:
-      return { ...state, ...action.payload, loading: false };
+      return { ...state, loading: false, ...action.payload };
     case UPDATE_DOG_PHOTOS_FAILED:
-      return { state, ...action.payload, loading: false };
+      return { ...state, loading: false, ...action.payload };
     default:
       return state;
   }
