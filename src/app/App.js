@@ -1,25 +1,27 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/header/header';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { retrieveBreedList } from './actions/api';
+import { retrieveDogPhotos } from './actions/api';
 
 function NestedOptions({base, values}) {
-  return (
-  <Fragment>
-    <option key={`${base}.${values.length}`} value={base}>{base}</option>
-    {
-      values.map?.((value, i) => {
-        return <option key={`${value}.${i}`} value={value}> -{value}</option>
-      })
-    }
-  </Fragment>)
+  
 }
 
-function App({t, breedList, retrieveBreedList}) {
 
-  useEffect(() => console.log(breedList), [breedList]);
+
+function App({t, breedList, retrieveDogPhotos, loading}) {
+
+  const [selectedValue, setSelectedValue] = useState();
+
+  const handlePhotoRefresh = () => {
+    retrieveDogPhotos({selectedValue})
+  };
+
+  const handleSelectChange = (ev) => {
+    console.log(ev);
+  }
 
   return (
     <div>
@@ -27,18 +29,23 @@ function App({t, breedList, retrieveBreedList}) {
       <div className="content">
         <h1>{t('breedSelect.title')}:</h1>
         <div>
-          <button alt={t('updateBreedList.button')} onClick={retrieveBreedList}>
-            <i className={breedList === 'loading' ? 'fas fa-sync-alt fa-spin' : 'fas fa-sync-alt'}></i>
+          <button alt={t('updateBreedList.button')} onClick={handlePhotoRefresh}>
+            <i className={loading ? 'fas fa-sync-alt fa-spin' : 'fas fa-sync-alt'}></i>
           </button>
-          <select>
+          <select onChange={(ev) => handleSelectChange(ev)}>
+            <option>--</option>
             {
-              typeof breedList === 'object' ?
-                Object.entries(breedList)?.map?.((breedArr, i) => {
-                  let [breed, subBreeds] = breedArr;
-                  return <NestedOptions base={breed} values={subBreeds}></NestedOptions>
-                }) 
-              :
-              ''
+              breedList?.map?.((breed, i) => {
+                return (
+                  <Fragment>
+                    <option key={`${breed.breed}.${i}`} value={breed.breed}>{breed.breed}</option>
+                    {
+                      breed.subBreeds?.map?.((value, j) => {
+                        return <option key={`${i}.${j}`} value={value}>&nbsp;&nbsp;&nbsp;&nbsp;&#183;{value}</option>
+                      })
+                    }
+                  </Fragment>)
+              })
             }
           </select>
         </div>
@@ -48,12 +55,15 @@ function App({t, breedList, retrieveBreedList}) {
 }
 
 const mapStateToProps = (store) => {
-  return { breedList: store.breedList }
+  return { 
+    breedList: store.breedListReducer.breedList,
+    loading: store.dogPhotosReducer.loading
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      retrieveBreedList: () => dispatch(retrieveBreedList())
+      retrieveDogPhotos: (baseBreed, subBreed) => dispatch(retrieveDogPhotos({baseBreed, subBreed}))
     }
 }
 
