@@ -17,10 +17,10 @@ function Header() {
       <h1>flufferz</h1>
       <div>
         <label htmlFor="language">{t('languageSelect.label')}: </label>
-        <select name="language" id="language" value={i18n.language} onChange={(event) => languageSelected(event.target.value)}>
+        <select name="language" id="language" value={i18n.language.slice(0, 2)} onChange={(event) => languageSelected(event.target.value)}>
           {
             languageList.map((lng, index) => {
-              return lng.length <= 2 ? <option key={index} value={lng}>{t(lng)}</option> : '';
+              return lng.length > 0 ? <option key={index} value={lng}>{t(lng)}</option> : '';
             })
           }
         </select>
