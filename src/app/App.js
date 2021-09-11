@@ -12,7 +12,7 @@ function App({t, breedList, retrieveDogPhotos, loadingList, loadingPhotos}) {
   const [selectedValue, setSelectedValue] = useState();
 
   const handlePhotoRefresh = () => {
-    retrieveDogPhotos(selectedValue.breed, selectedValue.subBreed)
+    selectedValue && retrieveDogPhotos(selectedValue.breed, selectedValue.subBreed);
   };
 
   const handleSelectChange = (ev) => {
